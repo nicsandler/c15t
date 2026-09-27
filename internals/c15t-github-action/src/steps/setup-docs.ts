@@ -22,10 +22,32 @@ export function setupDocsWithScript(consentGitToken?: string): void {
 		core.info('PR from fork detected: skipping docs setup');
 		return;
 	}
-	const env = {
-		...process.env,
-		CONSENT_GIT_TOKEN: consentGitToken || process.env.CONSENT_GIT_TOKEN || '',
-	};
+	// Create a minimal allowlist of environment variables to prevent credential leakage
+	// to the fetched documentation template code during installation and execution.
+	// Only pass essential variables required for the setup script to function.
+	const safeEnvAllowlist = [
+		'PATH',
+		'HOME',
+		'USER',
+		'SHELL',
+		'TMPDIR',
+		'TMP',
+		'TEMP',
+		'NODE_ENV',
+		'CI',
+		'LANG',
+		'LC_ALL',
+		'LC_CTYPE',
+	];
+	const env: Record<string, string> = {};
+	for (const key of safeEnvAllowlist) {
+		if (process.env[key]) {
+			env[key] = process.env[key] as string;
+		}
+	}
+	// Explicitly set the required authentication token
+	env.CONSENT_GIT_TOKEN = consentGitToken || process.env.CONSENT_GIT_TOKEN || '';
+	
 	core.info('Running docs setup script via pnpm tsx scripts/setup-docs.ts');
 	const result = spawnSync(
 		'pnpm',
