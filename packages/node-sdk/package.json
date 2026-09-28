@@ -52,10 +52,10 @@
 	},
 	"dependencies": {
 		"@c15t/backend": "workspace:*",
-		"@orpc/client": "1.8.1",
-		"@orpc/contract": "1.8.1",
-		"@orpc/openapi-client": "^1.8.1",
-		"@orpc/server": "1.8.1"
+		"@orpc/client": "^1.13.6",
+		"@orpc/contract": "^1.14.8",
+		"@orpc/openapi-client": "^1.14.8",
+		"@orpc/server": "^1.14.8"
 	},
 	"devDependencies": {
 		"@c15t/typescript-config": "workspace:*",
