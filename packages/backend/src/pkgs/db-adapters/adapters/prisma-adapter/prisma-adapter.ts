@@ -243,7 +243,7 @@ const createEntityTransformer = (
 				return {
 					[getField(model as string, w.field as string)]:
 						w.operator === 'eq' || !w.operator
-							? w.value
+							? { equals: w.value }
 							: {
 									[operatorToPrismaOperator(w.operator)]: w.value,
 								},
@@ -255,7 +255,7 @@ const createEntityTransformer = (
 				return {
 					[getField(model as string, w.field as string)]:
 						w.operator === 'eq' || !w.operator
-							? w.value
+							? { equals: w.value }
 							: {
 									[operatorToPrismaOperator(w.operator)]: w.value,
 								},
